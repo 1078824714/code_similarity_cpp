@@ -1,6 +1,7 @@
 # What is it
--**code_similarity_cpp** is a Python package that Calculate the similarity between two cpp codes or the maximum similarity between the first cpp code and a list of cpp codes.
--It uses the AST (Abstract Syntax Tree) of the C++ code with the winnowing algorithm and jaccard similarity to calculate the similarity.
+**code_similarity_cpp** is a Python package that Calculate the similarity between two cpp codes or the maximum similarity between the first cpp code and a list of cpp codes.
+
+It uses the AST (Abstract Syntax Tree) of the C++ code with the winnowing algorithm and jaccard similarity to calculate the similarity.
 # Where to get it
 ```sh
 #PyPI
