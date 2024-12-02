@@ -4,7 +4,7 @@
 # Where to get it
 ```sh
 #PyPI
-pip install code_similarity_cpp
+pip install git+https://github.com/1078824714/code_similarity_cpp.git
 ```
 # Example
 ```python
