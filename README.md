@@ -5,7 +5,7 @@ It uses the AST (Abstract Syntax Tree) of the C++ code with the winnowing algori
 # Where to get it
 ```sh
 #PyPI
-pip install git+https://github.com/1078824714/code_similarity_cpp.git
+pip install git+https://github.com/1078824714/code_similarity_cpp
 ```
 # Example
 ```python
