@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='code_similarity_cpp',
-    version='0.1',
+    version='0.2',
     packages=['code_similarity_cpp'],
     description='A Python library for calculating the similarity of cpp codes',
     author='1078824714',
