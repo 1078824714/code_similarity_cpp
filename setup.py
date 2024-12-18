@@ -10,6 +10,7 @@ setup(
     url='https://github.com/1078824714/code_similarity_cpp',  
     install_requires=[
         'tree_sitter_cpp', 
-        'tree_sitter',  
+        'tree_sitter', 
+        'graphviz'
     ],  
 )
