@@ -21,10 +21,11 @@ path1="your path to code1"
 path2="your path to code2"
 
 #Calculate the similarity between two cpp codes
-similarity0 = code_similarity_cpp.Similarity(code1=code1, code2=code2)
-similarity1 = code_similarity_cpp.Similarity(path1=path1, path2=path2)
-similarity2 = code_similarity_cpp.Similarity(code1=code1, path2=path2)
-similarity3 = code_similarity_cpp.Similarity(path1=path1, code2=code2)
+model = code_similarity_cpp.Similarity()
+similarity0 = model.similarity(code1=code1, code2=code2)
+similarity1 = model.similarity(path1=path1, path2=path2)
+similarity2 = model.similarity(code1=code1, path2=path2)
+similarity3 = model.similarity(path1=path1, code2=code2)
 ```
 ```python
 import code_similarity_cpp
@@ -37,8 +38,9 @@ path1="your path to code1"
 path2=["your path to code2", "your path to code3", "your path to code4", ...]
 
 #Calculate the maximum similarity between the first cpp code and a list of cpp codes
-similarity0 = code_similarity_cpp.MaxSimilarity(code1=code1, code2=code2)
-similarity1 = code_similarity_cpp.MaxSimilarity(path1=path1, path2=path2)
-similarity2 = code_similarity_cpp.MaxSimilarity(code1=code1, path2=path2)
-similarity3 = code_similarity_cpp.MaxSimilarity(path1=path1, code2=code2)
+model = code_similarity_cpp.Similarity()
+similarity0 = model.similarity(code1=code1, code2=code2)
+similarity1 = model.similarity(path1=path1, path2=path2)
+similarity2 = model.similarity(code1=code1, path2=path2)
+similarity3 = model.similarity(path1=path1, code2=code2)
 ```
