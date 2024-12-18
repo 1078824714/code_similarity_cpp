@@ -70,9 +70,9 @@ class Similarity:
         ''' 
         return dot: Digraph object,from graphviz library
 
-        code1:the cpp code to be drawn
+        code:the cpp code to be drawn
 
-        path1:the path of the cpp code to be drawn
+        path:the path of the cpp code to be drawn
         '''
         self.__code1=''
         try:
