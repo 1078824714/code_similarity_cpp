@@ -50,21 +50,28 @@ class Similarity:
         except ValueError as e:
             print(e)
             return None
-        simliar_code=''
-        if(type(self.__code2)==list):
-            max_similarity=0
-            ast1=self.__ast_after(self.__code1)
-            for code in self.__code2:
-                ast2=self.__ast_after(code)
-                temp=max(max_similarity,self.__similarity(ast1,ast2))
-                if(temp!=max_similarity):
-                    max_similarity=temp
-                    simliar_code=code
-            return max_similarity,simliar_code
-        else:
-            ast1=self.__ast_after(self.__code1)
-            ast2=self.__ast_after(self.__code2)
-            return self.__similarity(ast1,ast2),self.__code2
+        
+        self.__code1=self.__preprocess_after(self.__code1)
+        match self.__code2:
+            case str():
+                code2=self.__code2
+                self.__code2=self.__preprocess_after(self.__code2)
+                ast1=self.__ast_after(self.__code1)
+                ast2=self.__ast_after(self.__code2)
+                return self.__similarity(ast1,ast2),code2
+            case list():
+                simliar_code=''
+                max_similarity=0
+                ast1=self.__ast_after(self.__code1)
+                for code in self.__code2:
+                    code_temp=code
+                    code=self.__preprocess_after(code)
+                    ast2=self.__ast_after(code)
+                    temp=max(max_similarity,self.__similarity(ast1,ast2))
+                    if temp!=max_similarity:
+                        max_similarity=temp
+                        simliar_code=code_temp
+                return max_similarity,simliar_code
 
     def Print_tree(self,code:str=None,path:str=None):
         ''' 
@@ -158,7 +165,7 @@ class Similarity:
                 number+=1
                 i+=sum
                 continue
-            if(pos==len(codewithtype2)):
+            if pos==len(codewithtype2):
                 i+=1
                 pos=0
         duplication_str1=' '.join(duplication_list1)
@@ -211,7 +218,7 @@ class Similarity:
     @staticmethod
     def __preprocessor1(code):
         i=code.find('#include')
-        while(i!=-1):
+        while i!=-1:
             j=code.find('\n',i+7)+1
             code=code[:i]+code[j:]
             i=code.find('#include')          
@@ -231,7 +238,7 @@ class Similarity:
                     code_new=code[:s]+code[e:]
                     return code_new
                 i=preprocessed_code.find('#')
-                while(i!=-1):
+                while i!=-1:
                     code=macro(i,code)
                     i=code.find('#')
                 return code
@@ -269,20 +276,22 @@ class Similarity:
         
         return code
 
-    def __preprocess_after(self):
-        self.__code1=self.__preprocessor1(self.__code1)
-        self.__code1=self.__preprocess_cpp_code(self.__code1,self.__decode)
-        self.__code1=self.__preprocessor2(self.__code1)
-        self.__code2=self.__preprocessor1(self.__code2)
-        self.__code2=self.__preprocess_cpp_code(self.__code2,self.__decode)
-        self.__code2=self.__preprocessor2(self.__code2)
+    def __preprocess_after(self,code):
+        
+        code_temp=self.__preprocessor1(code)
+        code_temp=self.__preprocess_cpp_code(code_temp,self.__decode)
+        code_temp=self.__preprocessor2(code_temp)
+        return code_temp
 
     def __preprocess_before(self):
-        self.__code1=self.__preprocessor1(self.__code1)
-        self.__code1=self.__preprocess_cpp_code(self.__code1,self.__decode)
-        self.__code2=self.__preprocessor1(self.__code2)
-        self.__code2=self.__preprocess_cpp_code(self.__code2,self.__decode)
-
+        def preprocess(code):
+            code_temp=self.__preprocessor1(code)
+            code_temp=self.__preprocess_cpp_code(code_temp,self.__decode)
+            return code_temp
+        
+        self.__code1=preprocess(self.__code1)
+        self.__code2=preprocess(self.__code2)
+      
     def __ast_after(self,code):
         tree=self.__parser.parse(bytes(code, 'utf8'))
         root_node=tree.root_node
@@ -339,7 +348,6 @@ class Similarity:
         return set(fingerprints)
 
     def __similarity(self,ast1,ast2):
-        self.__preprocess_after()
 
         def jaccard_index(setA, setB):                  #jaccard
             intersection = setA.intersection(setB)
